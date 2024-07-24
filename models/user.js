@@ -1,18 +1,20 @@
 const mongoose = require('mongoose');
 
+// Define the application schema
 const applicationSchema = new mongoose.Schema({
   company: String,
   title: String,
-  date: String,
+  date: Date,
   notes: String,
   postingLink: String,
-  status:{
+  status: {
     type: String,
-    enum: ['interested', 'applied', 'interviewing', 'rejected', 'accepted' ]
-  } 
-}, { timestamps: true})
+    enum: ['interested', 'applied', 'interviewing', 'rejected', 'accepted']
+  }
+}, { timestamps: true });
 
-const userSchema = mongoose.Schema({
+// Check if the User model is already defined
+const User = mongoose.models.User || mongoose.model('User', new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -22,9 +24,7 @@ const userSchema = mongoose.Schema({
     required: true,
   },
   applications: [applicationSchema]
-});
-
-const User = mongoose.model('User', userSchema);
+}));
 
 module.exports = User;
 
